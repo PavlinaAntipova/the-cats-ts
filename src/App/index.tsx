@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import { ThemeProvider } from 'styled-components';
 
+import MainLayout from '@app/components/layouts/MainLayout';
 import useLocalStorage from '@app/hooks/useLocalStorage';
 import { ThemeContext } from '@app/theme';
 import { darkMode, lightMode } from '@app/theme/modes';
@@ -27,7 +28,7 @@ function App() {
     <ThemeContext.Provider value={value}>
       <ThemeProvider theme={isDarkTheme ? darkMode : lightMode}>
         <StyledApp>
-          <>hi</>
+          <MainLayout />
         </StyledApp>
       </ThemeProvider>
     </ThemeContext.Provider>
