@@ -39,6 +39,7 @@
     "prettier": "^2.8.8",
     "styled-components": "^5.3.10",
     "typescript": "^5.0.2",
-    "vite": "^4.3.2"
+    "vite": "^4.3.2",
+    "vite-plugin-favicons-inject": "^2.2.0"
   }
 }
