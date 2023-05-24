@@ -1,0 +1,48 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/typescript"
+  ],
+  "overrides": [],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react", "@typescript-eslint"],
+  "rules": {
+    "@typescript-eslint/no-unused-vars": "warn",
+
+    "prefer-const": "off",
+    "react/prop-types": "off",
+    "arrow-body-style": ["error", "as-needed"],
+    "react/jsx-sort-props": [
+      2,
+      {
+        "callbacksLast": false,
+        "shorthandFirst": true,
+        "shorthandLast": false,
+        "multiline": "last",
+        "ignoreCase": true,
+        "noSortAlphabetically": true,
+        "reservedFirst": true,
+        "locale": "auto"
+      }
+    ],
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/ban-ts-comment": "warn",
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-uses-react": "off",
+    "react/jsx-filename-extension": [
+      1,
+      { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
+    ],
+    "@typescript-eslint/no-empty-interface": "off"
+  }
+}
