@@ -10,7 +10,14 @@
   "quoteProps": "as-needed",
   "arrowParens": "avoid",
   "proseWrap": "always",
-  "importOrder": ["^react$", "^[a-zA-Z]", "^@tanstack/(.*)$", "@?\\w", "^@app/(.*)$", "^[./]"],
+  "importOrder": [
+    "^react$",
+    "^[a-zA-Z]",
+    "^@tanstack/(.*)$",
+    "^@app/(.*)$",
+    "^@app/components/(.*)$",
+    "^[./]"
+  ],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true
 }
