@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
-import BackIcon from '@app/assets/icons/back.svg';
+import { ReactComponent as BackIcon } from '@app/assets/icons/back.svg';
 
 import { StyledBackBtn } from './styled';
 
