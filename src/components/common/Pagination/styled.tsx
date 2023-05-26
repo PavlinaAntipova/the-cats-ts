@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const StyledPagination = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: auto;
 `;
 export const Page = styled.span`
   display: flex;

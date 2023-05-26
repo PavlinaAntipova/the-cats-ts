@@ -41,6 +41,7 @@ export const NotFoundText = styled.p`
 `;
 
 export const ImagesGrid = styled.ul`
+  margin-bottom: 30px;
   @media screen and (min-width: 768px) {
     display: grid;
     counter-reset: li;

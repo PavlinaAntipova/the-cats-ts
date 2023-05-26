@@ -2,17 +2,19 @@ import { FC, MouseEvent, memo, useMemo } from 'react';
 
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
+import { LIMIT_GALLERY_ITEMS_PER_PAGE } from '@app/constants';
+
 import { BackBtn, NextBtn, Page, StyledPagination } from './styled';
 
 type TPaginationProps = {
   page: number;
-  countItems: number;
+  countItems?: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const Pagination: FC<TPaginationProps> = ({ page, setPage, countItems }) => {
   const isDisabledBack = useMemo(() => page <= 1, [page]);
-  const isDisabledNext = useMemo(() => countItems !== 5, [countItems]);
+  const isDisabledNext = useMemo(() => countItems !== LIMIT_GALLERY_ITEMS_PER_PAGE, [countItems]);
 
   const onBtnClick = (e: MouseEvent<HTMLButtonElement>) => {
     const target = e.currentTarget;

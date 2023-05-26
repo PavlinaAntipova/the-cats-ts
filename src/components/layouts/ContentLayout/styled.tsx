@@ -6,6 +6,8 @@ interface IContentBoxProps {
 
 export const ContentBox = styled.div<IContentBoxProps>`
   position: relative;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   padding: 20px;
   background-color: ${props => props.theme.common.mainContextBgColor};

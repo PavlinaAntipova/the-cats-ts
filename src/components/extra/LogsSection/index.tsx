@@ -13,7 +13,7 @@ type TLogsBlockProps = {
 
 const LogsBlock: FC<TLogsBlockProps> = ({ logsList }) => (
   <StyledLogsBlock>
-    {logsList.length ? (
+    {logsList && logsList.length ? (
       <LogsList>
         {logsList.map(item => (
           <LogItem
