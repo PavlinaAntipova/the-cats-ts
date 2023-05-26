@@ -5,6 +5,10 @@ interface IComponentwithSize {
 }
 
 export const Box = styled.div<IComponentwithSize>`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   height: calc(${props => props.size} * 2);
   width: calc(${props => props.size} * 2);
   display: flex;

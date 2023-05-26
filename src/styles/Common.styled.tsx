@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { GALLERY_GRID } from '@app/constants';
+
 export const BasicText = styled.p`
   font-weight: 400;
   font-size: 20px;
@@ -60,15 +62,18 @@ export const ImageItem = styled.li`
   border-radius: ${props => props.theme.common.borderRadiusMax};
   height: 210px;
   overflow: hidden;
+
   @media screen and (max-width: 767px) {
     margin-bottom: 10px;
     &:last-child {
       margin-bottom: 10px;
     }
   }
+
   @media screen and (min-width: 1440px) {
     height: 140px;
   }
+
   & button {
     position: absolute;
     top: 50%;
@@ -83,6 +88,7 @@ export const ImageItem = styled.li`
     border-radius: ${props => props.theme.common.borderRadiusMin};
     opacity: 0;
   }
+
   & div::before {
     content: '';
     position: absolute;
@@ -93,6 +99,7 @@ export const ImageItem = styled.li`
     background-color: rgba(255, 134, 142, 0.6);
     opacity: 0;
   }
+
   &:hover,
   &:focus {
     & div::before,
@@ -100,6 +107,7 @@ export const ImageItem = styled.li`
       opacity: 1;
     }
   }
+
   & p {
     position: absolute;
     bottom: 10px;
@@ -116,6 +124,7 @@ export const ImageItem = styled.li`
     border-radius: ${props => props.theme.common.borderRadiusMin};
     opacity: 0;
   }
+
   & a::before {
     content: '';
     position: absolute;
@@ -126,6 +135,7 @@ export const ImageItem = styled.li`
     background-color: rgba(255, 134, 142, 0.6);
     opacity: 0;
   }
+
   & a:hover,
   & a:focus {
     &::before,
@@ -133,38 +143,37 @@ export const ImageItem = styled.li`
       opacity: 1;
     }
   }
+
   & img {
     width: 100%;
     height: 100%;
   }
 
   @media screen and (min-width: 1440px) {
-    &:nth-child(10n + 1) {
-      outline: 1px solid red;
-    }
+    ${() => `
+      &:nth-child(10n + ${GALLERY_GRID.THE_FIRST_ITEM}),
+      &:nth-child(10n + ${GALLERY_GRID.THE_FORTH_ITEM}),
+      &:nth-child(10n + ${GALLERY_GRID.THE_EIGHTH_ITEM}),
+      &:nth-child(10n + ${GALLERY_GRID.THE_NINTH_ITEM}) {
+        height: 300px;
+    }`}
 
-    &:nth-child(10n + 4) {
-      outline: 1px solid red;
-    }
+    ${() => `
+      &:nth-child(10n + ${GALLERY_GRID.THE_FIRST_ITEM}),
+      &:nth-child(10n + ${GALLERY_GRID.THE_EIGHTH_ITEM}) {
+         grid-column: auto/span 1;
+      grid-row: auto/span 2;
 
-    &:nth-child(10n + 8) {
-      outline: 1px solid red;
-    }
+      & img {
+        object-fit: cover;
+      }
+    }`}
 
-    &:nth-child(10n + 9) {
-      outline: 1px solid red;
-    }
+    ${() => `
+      &:nth-child(10n + ${GALLERY_GRID.THE_FORTH_ITEM}),
+      &:nth-child(10n + ${GALLERY_GRID.THE_NINTH_ITEM}) {
+        grid-column: auto/span 2;
+      grid-row: auto/span 2;
+    }`}
   }
 `;
-
-// @media screen and (min-width: 768px)
-// .cssGrid_GalleryItem__hPgn4:nth-child(10n+4), .cssGrid_GalleryItem__hPgn4:nth-child(10n+9)
-
-// grid-column: auto/span 2;
-//     grid-row: auto/span 2;
-
-// @media screen and (min-width: 768px)
-// .cssGrid_GalleryItem__hPgn4:nth-child(10n+1), .cssGrid_GalleryItem__hPgn4:nth-child(10n+8) {
-//     grid-column: auto/span 1;
-//     grid-row: auto/span 2;
-// }

@@ -1,6 +1,7 @@
 import { Route, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 
 import App from '@app/App';
+import ROUTES from '@app/constants/routes';
 import {
   BreedInfoPage,
   BreedsPage,
@@ -15,7 +16,7 @@ import {
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route
-      path="/"
+      path={ROUTES.home}
       element={<App />}
     >
       <Route
@@ -23,11 +24,11 @@ const router = createBrowserRouter(
         element={<HomePage />}
       />
       <Route
-        path="/voting"
+        path={ROUTES.voting}
         element={<VotingPage />}
       />
       <Route
-        path="/breeds"
+        path={ROUTES.breeds}
         element={<BreedsPage />}
       >
         <Route
@@ -36,23 +37,23 @@ const router = createBrowserRouter(
         />
       </Route>
       <Route
-        path="/gallery"
+        path={ROUTES.gallery}
         element={<GalleryPage />}
       />
       <Route
-        path="/likes"
+        path={ROUTES.likes}
         element={<FeedbackPage />}
       />
       <Route
-        path="/favourites"
+        path={ROUTES.favourites}
         element={<FavoritePage />}
       />
       <Route
-        path="/dislikes"
+        path={ROUTES.dislikes}
         element={<FeedbackPage />}
       />
       <Route
-        path="/search"
+        path={ROUTES.search}
         element={<SearchPage />}
       />
     </Route>,
