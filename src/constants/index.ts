@@ -9,3 +9,5 @@ export const FEEDBACK_VALUES = {
     'likes': 1,
     'dislikes': -1
 }
+
+export const LIMIT_GALLERY_ITEMS_PER_PAGE = 10;

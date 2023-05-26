@@ -109,8 +109,3 @@ export const ControlItem = styled.li`
     }
   }
 `;
-
-export const LogsList = styled.ul`
-  height: 315px;
-  overflow: auto;
-`;

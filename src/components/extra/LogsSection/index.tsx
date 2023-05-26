@@ -1,17 +1,18 @@
 import { FC } from 'react';
 
 import { TFavoritesResult, TVoteInfo } from '@app/api/types/vote';
-import LogItem from '@app/components/common/LogItem';
+import LogItem from '@app/components/extra/LogsSection/LogItem';
 import { isFavoritesResult } from '@app/pages/VotingPage/helpers';
-import { LogsList } from '@app/pages/VotingPage/styled';
 import { NotFoundText } from '@app/styles/Common.styled';
+
+import { LogsList, StyledLogsBlock } from './styled';
 
 type TLogsBlockProps = {
   logsList: (TVoteInfo | TFavoritesResult)[];
 };
 
 const LogsBlock: FC<TLogsBlockProps> = ({ logsList }) => (
-  <div>
+  <StyledLogsBlock>
     {logsList.length ? (
       <LogsList>
         {logsList.map(item => (
@@ -24,7 +25,7 @@ const LogsBlock: FC<TLogsBlockProps> = ({ logsList }) => (
     ) : (
       <NotFoundText>{`You haven't made vote yet...`}</NotFoundText>
     )}
-  </div>
+  </StyledLogsBlock>
 );
 
 export default LogsBlock;

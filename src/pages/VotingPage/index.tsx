@@ -7,8 +7,8 @@ import { votingAPI } from '@app/api';
 import { TFavoritesResult, TVoteInfo } from '@app/api/types/vote';
 import useLocalStorage from '@app/hooks/useLocalStorage';
 
+import LogsBlock from '../../components/extra/LogsSection';
 import { makeLogHistory } from './helpers';
-import LogsBlock from './sections/LogsSection';
 import RandomCatSection from './sections/RandomCatSection';
 
 const VotingPage: FC = () => {
@@ -17,6 +17,7 @@ const VotingPage: FC = () => {
     'favorite_cats',
     [],
   );
+
   const [logsList, setLogsList] = useState<(TVoteInfo | TFavoritesResult)[]>([]);
 
   const { data: votingResult, isError: isErrorVotingResult } = useQuery({

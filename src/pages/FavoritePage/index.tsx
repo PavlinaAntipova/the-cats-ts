@@ -1,44 +1,41 @@
 import { FC, memo, useEffect } from 'react';
 
 import { useQuery } from 'react-query';
-import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { votingAPI } from '@app/api';
+import { favoriteAPI } from '@app/api';
 import Loader from '@app/components/common/Loader';
 import Skeleton from '@app/components/common/Skeleton';
+import LogsBlock from '@app/components/extra/LogsSection';
 import useLocalStorage from '@app/hooks/useLocalStorage';
 import { ImageItem, ImagesGrid } from '@app/styles/Common.styled';
 
-import { filterDataByPage } from './helpers';
-
-const FeedbackPage: FC = () => {
-  const { pathname } = useLocation();
+const FavoritePage: FC = () => {
   const [userId] = useLocalStorage<string>('user_id');
 
   const {
-    data: votingResult,
-    isError: isErrorVotingResult,
-    isLoading: isLoadingvotingResult,
-    isFetching: isFetchingVotingResult,
+    data: favoritesResult,
+    isError: isErrorFavoritesResult,
+    isLoading: isLoadingFavoritesResult,
+    isFetching: isFetchingFavoritesResult,
   } = useQuery({
     queryKey: ['votingResult', userId],
-    queryFn: () => votingAPI.getVotings(userId),
+    queryFn: () => favoriteAPI.getFavorites(userId),
   });
 
   useEffect(() => {
-    isErrorVotingResult && toast('Something went wrong. Please try again.');
-  }, [isErrorVotingResult]);
+    isErrorFavoritesResult && toast('Something went wrong. Please try again.');
+  }, [isErrorFavoritesResult]);
 
   return (
     <>
-      <> {!votingResult && isLoadingvotingResult && <Loader size={'100px'} />}</>
+      <> {!favoritesResult && isLoadingFavoritesResult && <Loader size={'100px'} />}</>
 
       <ImagesGrid>
-        {votingResult &&
-          filterDataByPage(votingResult, pathname).map(item => (
+        {favoritesResult &&
+          favoritesResult.map(item => (
             <ImageItem key={item.id}>
-              {isFetchingVotingResult || isLoadingvotingResult ? (
+              {isFetchingFavoritesResult || isLoadingFavoritesResult ? (
                 <Skeleton />
               ) : (
                 <img
@@ -49,8 +46,9 @@ const FeedbackPage: FC = () => {
             </ImageItem>
           ))}
       </ImagesGrid>
+      <LogsBlock logsList={[]} />
     </>
   );
 };
 
-export default memo(FeedbackPage);
+export default memo(FavoritePage);
