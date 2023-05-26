@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, memo, useEffect } from 'react';
 
 import { useQuery } from 'react-query';
 import { useLocation } from 'react-router-dom';
@@ -53,4 +53,4 @@ const FeedbackPage: FC = () => {
   );
 };
 
-export default FeedbackPage;
+export default memo(FeedbackPage);
