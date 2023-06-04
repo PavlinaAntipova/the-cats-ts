@@ -11,7 +11,7 @@ const GalleryItemButton: FC<TGalleryItemButtonProps> = ({ id, handleClick, src, 
   <Wrapper>
     <Button
       data-id={id}
-      data-imgId={imgId}
+      data-imgid={imgId}
       type="button"
       onClick={handleClick}
     >

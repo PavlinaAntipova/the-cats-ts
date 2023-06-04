@@ -69,9 +69,9 @@ const FavoritePage: FC = () => {
 
   const handleClick = useCallback((e: MouseEvent<HTMLButtonElement>) => {
     const btn = e.currentTarget as HTMLButtonElement;
-    const { id, imgId } = btn.dataset;
+    const { id, imgid } = btn.dataset;
     id && setId(id);
-    imgId && setImageId(imgId);
+    imgid && setImageId(imgid);
     id && deleteFavorite(id.toString());
   }, []);
 
