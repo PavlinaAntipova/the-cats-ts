@@ -32,6 +32,12 @@ export const BasicFeedbackBlock = styled.div`
   padding: 18px 20px;
   background-color: ${props => props.theme.NotFoundText.bgColor};
   border-radius: ${props => props.theme.common.borderRadiusMin};
+  margin-bottom: 10px;
+  height: 60px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 `;
 
 export const NotFoundText = styled.p`
@@ -66,6 +72,7 @@ export const ImageItem = styled.li`
 
   @media screen and (max-width: 767px) {
     margin-bottom: 10px;
+
     &:last-child {
       margin-bottom: 10px;
     }
@@ -73,81 +80,6 @@ export const ImageItem = styled.li`
 
   @media screen and (min-width: 1440px) {
     height: 140px;
-  }
-
-  & button {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    background-color: ${props => props.theme.GridItem.btnHoverBgColor};
-    border-radius: ${props => props.theme.common.borderRadiusMin};
-    opacity: 0;
-  }
-
-  & div::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(255, 134, 142, 0.6);
-    opacity: 0;
-  }
-
-  &:hover,
-  &:focus {
-    & div::before,
-    & button {
-      opacity: 1;
-    }
-  }
-
-  & p {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 3;
-    padding: 5px 0;
-    width: 90%;
-    font-size: 16px;
-    line-height: 1.5em;
-    text-align: center;
-    color: ${props => props.theme.common.mainAccentColor};
-    background-color: ${props => props.theme.GridItem.btnHoverBgColor};
-    border-radius: ${props => props.theme.common.borderRadiusMin};
-    opacity: 0;
-  }
-
-  & a::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(255, 134, 142, 0.6);
-    opacity: 0;
-  }
-
-  & a:hover,
-  & a:focus {
-    &::before,
-    & p {
-      opacity: 1;
-    }
-  }
-
-  & img {
-    width: 100%;
-    height: 100%;
   }
 
   @media screen and (min-width: 1440px) {
@@ -165,7 +97,7 @@ export const ImageItem = styled.li`
          grid-column: auto/span 1;
       grid-row: auto/span 2;
 
-      & img {
+      & > img {
         object-fit: cover;
       }
     }`}
@@ -176,5 +108,29 @@ export const ImageItem = styled.li`
         grid-column: auto/span 2;
       grid-row: auto/span 2;
     }`}
+  }
+
+  // for display images
+  & > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  &:hover,
+  &:focus {
+    & > div::before,
+    & > div > button {
+      opacity: 1;
+    }
+  }
+
+  & > a:hover,
+  & > a:focus {
+    & a::before,
+    & p {
+      opacity: 1;
+    }
   }
 `;
