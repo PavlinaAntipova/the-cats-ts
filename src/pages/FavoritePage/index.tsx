@@ -1,20 +1,33 @@
-import { FC, memo, useEffect, useState } from 'react';
+import { FC, MouseEvent, memo, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
-import { useQuery } from 'react-query';
+import moment from 'moment';
+import { nanoid } from 'nanoid';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { favoriteAPI } from '@app/api';
+import GalleryItemButton from '@app/components/common/GalleryItemButton';
 import Loader from '@app/components/common/Loader';
 import Pagination from '@app/components/common/Pagination';
 import Skeleton from '@app/components/common/Skeleton';
 import LogsBlock from '@app/components/extra/LogsSection';
 import { LIMIT_GALLERY_ITEMS_PER_PAGE } from '@app/constants';
+import { FavoritesContext } from '@app/context/favorites';
+import { getElementsPerPage } from '@app/helpers/getElementsPerPage';
 import useLocalStorage from '@app/hooks/useLocalStorage';
 import { BasicFeedbackBlock, ImageItem, ImagesGrid, NotFoundText } from '@app/styles/Common.styled';
 
 const FavoritePage: FC = () => {
+  const queryClient = useQueryClient();
   const [userId] = useLocalStorage<string>('user_id');
   const [page, setPage] = useState(1);
+  const [id, setId] = useState<string>('');
+  const [imageId, setImageId] = useState<string>('');
+  const { pathname } = useLocation();
+
+  const { favoritesResultStore, setFavoritesResultStore, logsList, setLogsList } =
+    useContext(FavoritesContext);
 
   const {
     data: favoritesResult,
@@ -22,9 +35,51 @@ const FavoritePage: FC = () => {
     isLoading: isLoadingFavoritesResult,
     isFetching: isFetchingFavoritesResult,
   } = useQuery({
-    queryKey: ['votingResult', userId],
+    queryKey: ['favoriteResult', userId],
     queryFn: () => favoriteAPI.getFavorites(userId),
+    onSuccess: () => {
+      setLogsList(
+        favoritesResultStore.sort((a, b) => moment(b.created_at).valueOf() - moment(a.created_at).valueOf()),
+      );
+    },
   });
+
+  const { mutate: deleteFavorite } = useMutation(favoriteAPI.deleteFavorite, {
+    onSuccess: () => {
+      favoritesResult &&
+        setFavoritesResultStore([
+          ...favoritesResultStore,
+          {
+            message: 'SUCCESS',
+            id,
+            image_id: imageId,
+            created_at: moment().toDate(),
+            type: 'deleted',
+            key: nanoid(),
+          },
+        ]);
+      queryClient.invalidateQueries('favoriteResult');
+    },
+  });
+
+  const displayResult = useMemo(
+    () => (favoritesResult ? getElementsPerPage(page, favoritesResult) : []),
+    [favoritesResult, pathname, page],
+  );
+
+  const handleClick = useCallback((e: MouseEvent<HTMLButtonElement>) => {
+    const btn = e.currentTarget as HTMLButtonElement;
+    const { id, imgId } = btn.dataset;
+    id && setId(id);
+    imgId && setImageId(imgId);
+    id && deleteFavorite(id.toString());
+  }, []);
+
+  useEffect(() => {
+    setLogsList(
+      favoritesResultStore.sort((a, b) => moment(b.created_at).valueOf() - moment(a.created_at).valueOf()),
+    );
+  }, [favoritesResultStore]);
 
   useEffect(() => {
     isErrorFavoritesResult && toast('Something went wrong. Please try again.');
@@ -39,14 +94,17 @@ const FavoritePage: FC = () => {
           {favoritesResult && !!favoritesResult.length ? (
             <>
               <ImagesGrid>
-                {favoritesResult.map(item => (
+                {displayResult.map(item => (
                   <ImageItem key={item.id}>
                     {isFetchingFavoritesResult || isLoadingFavoritesResult ? (
                       <Skeleton />
                     ) : (
-                      <img
+                      <GalleryItemButton
+                        id={item.id}
+                        imgId={item.image_id}
                         src={item.image.url}
-                        alt="cat"
+                        handleClick={handleClick}
+                        isFavorited={true}
                       />
                     )}
                   </ImageItem>
@@ -56,10 +114,16 @@ const FavoritePage: FC = () => {
                 <Pagination
                   page={page}
                   setPage={setPage}
-                  countItems={favoritesResult.length}
+                  countItems={displayResult.length}
                 />
               )}
-              <LogsBlock logsList={[]} />
+              {!!logsList.length && (
+                <LogsBlock
+                  logsList={logsList}
+                  isLoading={isLoadingFavoritesResult}
+                  isFetching={isFetchingFavoritesResult}
+                />
+              )}
             </>
           ) : (
             <BasicFeedbackBlock>

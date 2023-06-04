@@ -1,26 +1,28 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useContext, useEffect } from 'react';
 
 import { useQuery } from 'react-query';
 import { toast } from 'react-toastify';
 
 import { votingAPI } from '@app/api';
-import { TFavoritesResult, TVoteInfo } from '@app/api/types/vote';
+import { FavoritesContext } from '@app/context/favorites';
+import { makeLogHistory } from '@app/helpers/makeLogHistory';
 import useLocalStorage from '@app/hooks/useLocalStorage';
 
 import LogsBlock from '../../components/extra/LogsSection';
-import { makeLogHistory } from './helpers';
 import RandomCatSection from './sections/RandomCatSection';
 
 const VotingPage: FC = () => {
   const [userId] = useLocalStorage<string>('user_id');
-  const [favoritesResultStore, setFavoritesResultStore] = useLocalStorage<TFavoritesResult[]>(
-    'favorite_cats',
-    [],
-  );
 
-  const [logsList, setLogsList] = useState<(TVoteInfo | TFavoritesResult)[]>([]);
+  const { favoritesResultStore, setFavoritesResultStore, logsList, setLogsList } =
+    useContext(FavoritesContext);
 
-  const { data: votingResult, isError: isErrorVotingResult } = useQuery({
+  const {
+    data: votingResult,
+    isError: isErrorVotingResult,
+    isLoading: isLoadingVotingResult,
+    isFetching: isFetchingVotingResult,
+  } = useQuery({
     queryKey: ['votingResult', userId],
     queryFn: () => votingAPI.getVotings(userId),
     onSuccess: data => {
@@ -34,7 +36,6 @@ const VotingPage: FC = () => {
   });
 
   useEffect(() => {
-    isErrorVotingResult && toast('Opps, while loading voting results the error happened. Please try again.');
     setLogsList(
       makeLogHistory({
         voting: votingResult ? votingResult : [],
@@ -43,13 +44,21 @@ const VotingPage: FC = () => {
     );
   }, [favoritesResultStore]);
 
+  useEffect(() => {
+    isErrorVotingResult && toast('Opps, while loading voting results the error happened. Please try again.');
+  }, [isErrorVotingResult]);
+
   return (
     <>
       <RandomCatSection
         favoritesResultStore={favoritesResultStore}
         setFavoritesResultStore={setFavoritesResultStore}
       />
-      <LogsBlock logsList={logsList} />
+      <LogsBlock
+        logsList={logsList}
+        isLoading={isLoadingVotingResult}
+        isFetching={isFetchingVotingResult}
+      />
     </>
   );
 };
