@@ -128,7 +128,7 @@ export const ImageItem = styled.li`
 
   & > a:hover,
   & > a:focus {
-    & a::before,
+    &::before,
     & p {
       opacity: 1;
     }

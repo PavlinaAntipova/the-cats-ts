@@ -32,7 +32,7 @@ const router = createBrowserRouter(
         element={<BreedsPage />}
       >
         <Route
-          path=":breedId"
+          path=":id"
           element={<BreedInfoPage />}
         />
       </Route>

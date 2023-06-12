@@ -5,9 +5,9 @@ import { usePageName } from "@app/hooks/usePageName";
 type UrlParamType = string | undefined;
 
 export const useBreadCrumbs = (): [string, UrlParamType] => {
-    const { breedId } = useParams();
+    const { id } = useParams();
     const pageName = usePageName();
-    const currentPage = pageName.split('/').filter(item => item !== breedId);
+    const currentPage = pageName.split('/').filter(item => item !== id);
 
-    return [currentPage[0], breedId];
+    return [currentPage[0], id];
   };
