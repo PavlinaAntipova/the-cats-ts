@@ -5,7 +5,8 @@ import { useQuery } from 'react-query';
 import { votingAPI } from '@app/api';
 import { TFavoritesResult } from '@app/api/types/vote';
 import Skeleton from '@app/components/common/Skeleton';
-import { ImgBox, ImgSectionWrapper } from '@app/pages/VotingPage/styled';
+import { ImgSectionWrapper } from '@app/pages/VotingPage/styled';
+import { ImgBox } from '@app/styles/Common.styled';
 
 import Controls from './components/Controls';
 

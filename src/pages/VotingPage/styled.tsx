@@ -11,28 +11,6 @@ export const ImgSectionWrapper = styled.div`
   margin-bottom: 52px;
 `;
 
-export const ImgBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 165px;
-  overflow: hidden;
-  border-radius: ${props => props.theme.common.borderRadiusMax};
-  background-color: #d4d4d4;
-  @media screen and (min-width: 768px) {
-    height: 375px;
-  }
-  @media screen and (min-width: 1440px) {
-    height: 360px;
-  }
-
-  & img {
-    width: 100%;
-    height: 100%;
-  }
-`;
-
 export const ControlsBlock = styled.ul`
   position: absolute;
   bottom: 0;

@@ -6,8 +6,9 @@ const shimmerAnimation = keyframes`
     }
 `;
 
-export const StyledSkeleton = styled.div`
+export const StyledSkeleton = styled.span`
   position: relative;
+  display: block;
   width: 100%;
   height: 100%;
   overflow: hidden;
